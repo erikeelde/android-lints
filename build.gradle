@@ -20,6 +20,19 @@ buildscript {
 
 plugins {
     id("com.gradleup.auto.manifest") version "1.0.4"
+    id("io.gitlab.arturbosch.detekt").version("1.20.0")
+}
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+//    allRules = false // activate all available (even unstable) rules.
+//    config = files("$projectDir/config/detekt.yml") // point to your custom config defining rules to run, overwriting default behavior
+    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+    autoCorrect = true
+}
+
+dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
 }
 
 allprojects {

@@ -7,16 +7,15 @@ import com.kozaxinan.android.checks.ImmutableDataClassDetector.Companion.ISSUE_I
 import org.junit.Test
 import java.util.*
 
-
 @Suppress("UnstableApiUsage")
 internal class ImmutableDataClassDetectorTest : LintDetectorTest() {
 
     @Test
     fun `test data class with val`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                   
                   data class Dto(
@@ -36,19 +35,19 @@ internal class ImmutableDataClassDetectorTest : LintDetectorTest() {
                     }
                   }
                 """
-                        ).indented()
-                )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expectClean()
+                ).indented()
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expectClean()
     }
 
     @Test
     fun `test data class with var`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                   
                   data class Dto(
@@ -57,159 +56,159 @@ internal class ImmutableDataClassDetectorTest : LintDetectorTest() {
                       var name: String,
                       val bool: Boolean
                   )
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expect(
-                        """
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expect(
+                """
               src/foo/Dto.kt:3: Warning: [totalNewResults, name] are var. [totalNewResults, name] need to be val. [ImmutableDataClassRule]
               data class Dto(
                          ~~~
               0 errors, 1 warnings
-            """.trimIndent()
-                )
+                """.trimIndent()
+            )
     }
 
     @Test
     fun `test data class with mutable list`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                   
                   data class Dto(
                       val totalResults: Int,
                       val list: MutableList<String>
                   )
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expect(
-                        """
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expect(
+                """
               src/foo/Dto.kt:3: Warning: Return type of [list] are not immutable. [list] need to be immutable class. [ImmutableDataClassRule]
               data class Dto(
                          ~~~
               0 errors, 1 warnings
-            """.trimIndent()
-                )
+                """.trimIndent()
+            )
     }
 
     @Test
     fun `test data class with immutable list`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                   
                   data class Dto(
                       val totalResults: Int,
                       val list: List<String>
                   )
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expectClean()
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expectClean()
     }
 
     @Test
     fun `test data class with mutable map`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                   
                   data class Dto(
                       val totalResults: Int,
                       val map: MutableMap<String, String>
                   )
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expect(
-                        """
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expect(
+                """
               src/foo/Dto.kt:3: Warning: Return type of [map] are not immutable. [map] need to be immutable class. [ImmutableDataClassRule]
               data class Dto(
                          ~~~
               0 errors, 1 warnings
-            """.trimIndent()
-                )
+                """.trimIndent()
+            )
     }
 
     @Test
     fun `test data class with immutable map`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                   
                   data class Dto(
                       val totalResults: Int,
                       val map: Map<String, String>
                   )
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expectClean()
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expectClean()
     }
 
     @Test
     fun `test kotlin class with var`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                   
                   class Dto(
                       var totalResults: Int
                   )
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expectClean()
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expectClean()
     }
 
     @Test
     fun `test java class with non final`() {
         lint()
-                .files(
-                        java(
-                                """
+            .files(
+                java(
+                    """
                   package foo;
                   
                   class Dto {
                     public int totalResults;
                   }
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expectClean()
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expectClean()
     }
 
     @Test
     fun `test kotlin class with var and equals hashcode`() {
         lint()
-                .files(
-                        kotlin(
-                                """
+            .files(
+                kotlin(
+                    """
                   package foo
                 
                   class Dto(var totalResults: Int) {
@@ -222,19 +221,19 @@ internal class ImmutableDataClassDetectorTest : LintDetectorTest() {
                       return false
                     }
                   }
-                """.trimIndent()
-                        )
+                    """.trimIndent()
                 )
-                .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
-                .run()
-                .expect(
-                        """
+            )
+            .issues(ISSUE_IMMUTABLE_DATA_CLASS_RULE)
+            .run()
+            .expect(
+                """
               src/foo/Dto.kt:3: Warning: [totalResults] are var. [totalResults] need to be val. [ImmutableDataClassRule]
               class Dto(var totalResults: Int) {
                     ~~~
               0 errors, 1 warnings
-            """.trimIndent()
-                )
+                """.trimIndent()
+            )
     }
 
     override fun getIssues(): List<Issue> {
@@ -254,5 +253,4 @@ internal class ImmutableDataClassDetectorTest : LintDetectorTest() {
     override fun getDetector(): Detector {
         return ImmutableDataClassDetector()
     }
-
 }

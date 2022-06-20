@@ -1,6 +1,7 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
 apply plugin: 'com.android.lint'
+apply plugin: 'io.gitlab.arturbosch.detekt'
 
 lintOptions {
     htmlReport true
@@ -13,7 +14,13 @@ lintOptions {
 sourceCompatibility = "1.8"
 targetCompatibility = "1.8"
 
+detekt {
+    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+    autoCorrect = true
+}
+
 dependencies {
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
 
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     compileOnly "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

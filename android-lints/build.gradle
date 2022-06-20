@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'maven-publish'
+apply plugin: 'io.gitlab.arturbosch.detekt'
 
 group = 'com.kozaxinan.android-lints'
 
@@ -33,7 +34,12 @@ afterEvaluate {
     }
 }
 
-
+detekt {
+    baseline = file("$projectDir/config/baseline.xml") // a way of suppressing issues before introducing detekt
+    autoCorrect = true
+}
 dependencies {
     lintPublish project(':checks')
+
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.20.0")
 }

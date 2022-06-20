@@ -32,11 +32,11 @@ internal class NetworkLayerClassImmutabilityDetector : RetrofitReturnTypeDetecto
             }
 
             val nonImmutableFields = fields
-                    .filter {
-                        val kotlinUClass = it.getContainingUClass() as? KotlinUClass
-                        kotlinUClass != null && !kotlinUClass.isEnum
-                    }
-                    .filter { it.text.contains("Mutable") }
+                .filter {
+                    val kotlinUClass = it.getContainingUClass() as? KotlinUClass
+                    kotlinUClass != null && !kotlinUClass.isEnum
+                }
+                .filter { it.text.contains("Mutable") }
             if (nonImmutableFields.isNotEmpty()) {
                 val fieldsText = nonImmutableFields.map { "${it.name} in ${it.getContainingUClass()?.name}" }
                 report(node, "Return type contains mutable class types. $fieldsText need to be immutable.")
@@ -45,10 +45,10 @@ internal class NetworkLayerClassImmutabilityDetector : RetrofitReturnTypeDetecto
 
         private fun report(node: UMethod, message: String) {
             context.report(
-                    issue = ISSUE_NETWORK_LAYER_IMMUTABLE_CLASS_RULE,
-                    scopeClass = node,
-                    location = context.getNameLocation(node),
-                    message = message
+                issue = ISSUE_NETWORK_LAYER_IMMUTABLE_CLASS_RULE,
+                scopeClass = node,
+                location = context.getNameLocation(node),
+                message = message
             )
         }
     }
@@ -56,13 +56,13 @@ internal class NetworkLayerClassImmutabilityDetector : RetrofitReturnTypeDetecto
     companion object {
 
         val ISSUE_NETWORK_LAYER_IMMUTABLE_CLASS_RULE: Issue = Issue.create(
-                id = "NetworkLayerImmutableClassRule",
-                briefDescription = "Immutable network layer class",
-                explanation = "Data classes used in network layer should be immutable by design.",
-                category = CORRECTNESS,
-                priority = 8,
-                severity = ERROR,
-                implementation = Implementation(NetworkLayerClassImmutabilityDetector::class.java, Scope.JAVA_FILE_SCOPE)
+            id = "NetworkLayerImmutableClassRule",
+            briefDescription = "Immutable network layer class",
+            explanation = "Data classes used in network layer should be immutable by design.",
+            category = CORRECTNESS,
+            priority = 8,
+            severity = ERROR,
+            implementation = Implementation(NetworkLayerClassImmutabilityDetector::class.java, Scope.JAVA_FILE_SCOPE)
         )
     }
 }

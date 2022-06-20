@@ -13,11 +13,11 @@ import com.kozaxinan.android.checks.NetworkLayerClassSerializedNameDetector.Comp
 internal class IssueRegistry : IssueRegistry() {
 
     override val issues: List<Issue> = listOf(
-            ISSUE_IMMUTABLE_DATA_CLASS_RULE,
-            ISSUE_NETWORK_LAYER_CLASS_SERIALIZED_NAME_RULE,
-            ISSUE_NETWORK_LAYER_IMMUTABLE_CLASS_RULE,
-            ISSUE_NETWORK_LAYER_CLASS_JSON_RULE,
-            ISSUE_NETWORK_LAYER_CLASS_JSON_CLASS_RULE
+        ISSUE_IMMUTABLE_DATA_CLASS_RULE,
+        ISSUE_NETWORK_LAYER_CLASS_SERIALIZED_NAME_RULE,
+        ISSUE_NETWORK_LAYER_IMMUTABLE_CLASS_RULE,
+        ISSUE_NETWORK_LAYER_CLASS_JSON_RULE,
+        ISSUE_NETWORK_LAYER_CLASS_JSON_CLASS_RULE
     )
 
     override val api: Int = CURRENT_API
